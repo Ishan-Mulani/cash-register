@@ -6,6 +6,8 @@ const noOfNotes = document.querySelectorAll(".number-of-notes");
 
 const availableNotes = [2000, 500, 100, 20, 10, 2, 1];
 
+checkButton.addEventListener("click", clickHandler);
+
 function clickHandler() {
   errorMessage.style.display = "none";
 
@@ -14,17 +16,17 @@ function clickHandler() {
       const amountReturned = cashGiven.value - billAmount.value;
       calculateAmount(amountReturned);
     } else {
-      showErrorMessage("Need more cash");
+      showErrorMessage("Cash given should be more than Bill amount");
     }
   } else {
-    showErrorMessage("Bill amount can't be negative.");
+    showErrorMessage("Invalid bill amount");
   }
 }
 
 function calculateAmount(amountReturned) {
   for (var i = 0; i < availableNotes.length; i++) {
     denomination = Math.trunc(amountReturned / availableNotes[i]);
-    amountReturned = amountReturned % availableNotes[i];
+    amountReturned %= availableNotes[i];
     noOfNotes[i].innerText = denomination;
   }
 }
@@ -34,4 +36,4 @@ function showErrorMessage(msg) {
   errorMessage.innerText = msg;
 }
 
-checkButton.addEventListener("click", clickHandler);
+
