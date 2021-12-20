@@ -8,6 +8,7 @@ const availableNotes = [2000, 500, 100, 20, 10, 2, 1];
 
 checkButton.addEventListener("click", clickHandler);
 
+
 function clickHandler() {
   errorMessage.style.display = "none";
 
@@ -22,6 +23,7 @@ function clickHandler() {
     showErrorMessage("Invalid bill amount");
   }
 }
+
 
 function calculateAmount(amountReturned) {
   for (var i = 0; i < availableNotes.length; i++) {
