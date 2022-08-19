@@ -1,29 +1,45 @@
 const billAmount = document.querySelector("#bill-amount");
 const cashGiven = document.querySelector("#cash-given");
 const checkButton = document.querySelector("#check-button");
+const resetButton = document.querySelector("#reset-button");
 const errorMessage = document.querySelector("#error-msg");
 const noOfNotes = document.querySelectorAll(".number-of-notes");
 
 const availableNotes = [2000, 500, 100, 20, 10, 2, 1];
+resetButton.style.display = "none";
 
-checkButton.addEventListener("click", clickHandler);
+const toggleResetBtn = () => {
+  checkButton.style.display = "none";
+  resetButton.style.display = "block";
+};
 
-
-function clickHandler() {
+const defaultValues = () => {
   errorMessage.style.display = "none";
+  billAmount.value = "";
+  cashGiven.value = "";
+  checkButton.style.display = "block";
+  resetButton.style.display = "none";
+  noOfNotes.forEach((el) => {
+    el.innerText = "";
+  });
+};
 
-  if (billAmount.value >= 0) {
-    if (cashGiven.value >= billAmount.value) {
+const clickHandler = () => {
+  errorMessage.style.display = "none";
+  if (parseInt(billAmount.value) > 0) {
+    if (parseInt(cashGiven.value) >= parseInt(billAmount.value)) {
       const amountReturned = cashGiven.value - billAmount.value;
       calculateAmount(amountReturned);
+      toggleResetBtn();
     } else {
-      showErrorMessage("Cash given should be more than Bill amount");
+      showErrorMessage("Cash given should be more than Bill Amount");
+      toggleResetBtn();
     }
   } else {
-    showErrorMessage("Invalid bill amount");
+    showErrorMessage("Invalid Bill Amount");
+    toggleResetBtn();
   }
-}
-
+};
 
 function calculateAmount(amountReturned) {
   for (var i = 0; i < availableNotes.length; i++) {
@@ -38,4 +54,5 @@ function showErrorMessage(msg) {
   errorMessage.innerText = msg;
 }
 
-
+checkButton.addEventListener("click", clickHandler);
+resetButton.addEventListener("click", defaultValues);
